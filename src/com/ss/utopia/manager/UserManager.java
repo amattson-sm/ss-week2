@@ -57,7 +57,7 @@ public class UserManager extends BaseManager {
     /**
      * Print Users in a pretty way
      */
-    private void printUsers(List<User> in) {
+    public void printUsers(List<User> in) {
         System.out.println("List of " + userName + "s:");
         System.out.println(" UID | Full Name\n" +
                            "-----|-----------");
@@ -66,6 +66,7 @@ public class UserManager extends BaseManager {
                 user.getLastName() + ", " + user.getFirstName();
             System.out.println(temp);
         }
+        System.out.println();
     }
 
 

@@ -38,6 +38,12 @@ public class FlightDAO extends BaseDAO<Flight> {
             new Object[] { flight.getDateTime(), flight.getReservedSeats(), flight.getSeatPrice(), flight.getFlightId() });
     }
 
+    // get flights with an airplane id
+    public List<Flight> getFlightsByAirplane(Integer id) throws SQLException, ClassNotFoundException {
+        return read("SELECT * FROM flight WHERE airplane_id = ?",
+            new Object[] { id } );
+    }
+
     // delete a flight
     public void deleteFlight(Flight flight) throws SQLException {
         save("DELETE FROM flight WHERE id = ?", new Object[] {flight.getFlightId()});

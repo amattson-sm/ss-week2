@@ -48,6 +48,7 @@ public class OverrideManager {
                     continue;
                 }
             } catch (Exception e) {
+                e.printStackTrace();
                 System.out.println("Unable to access the database.");
                 return Boolean.TRUE;
             }

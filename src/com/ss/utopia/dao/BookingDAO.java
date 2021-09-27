@@ -75,7 +75,10 @@ public class BookingDAO extends BaseDAO<Booking> {
      * @return object found if any, null if not
      */
     public Booking readInactiveBookingById(Integer id) throws SQLException, ClassNotFoundException {
-        List<Booking> out = read("SELECT * FROM booking WHERE id = ? AND is_active = 0",
+        List<Booking> out = read("SELECT booking.id, booking_user.user_id, booking.is_active, booking_payment.stripe_id, flight_bookings.flight_id, booking.confirmation_code FROM " +
+                "booking INNER JOIN booking_payment ON booking_payment.booking_id = booking.id " +
+                "INNER JOIN flight_bookings ON flight_bookings.booking_id = booking.id " +
+                "INNER JOIN booking_user ON booking_user.booking_id = booking.id WHERE id = ? AND booking.is_active = 0",
             new Object[] { id });
         if (out.size() == 0) return null;
         return out.get(0);

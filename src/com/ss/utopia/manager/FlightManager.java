@@ -47,7 +47,7 @@ public class FlightManager extends BaseManager {
      * Print flights in a pretty way
      * @param in list of flights to print
      */
-    private void printFlights(List<Flight> in) {
+    public void printFlights(List<Flight> in) {
         System.out.println("  ID  | ROUTE | PLANE | SEATS |  PRICE  | DATE & TIME" +
                          "\n------|-------|-------|-------|---------|--------------");
         for (Flight flight : in) {
@@ -158,9 +158,14 @@ public class FlightManager extends BaseManager {
                 System.out.println("Airport IDs must be of length 3.");
                 return Boolean.TRUE;
             }
+            // print airplane options
+            AirplaneManager aman = new AirplaneManager(conn);
+            AirplaneDAO adao = new AirplaneDAO(conn);
+            aman.printAirplanes(adao.readAirplanes());
+
             System.out.print("Enter an Airplane ID (Integer):\n - ");
             airplane = Integer.parseInt(in.nextLine());
-            System.out.print("Enter number of reserved seats (Integer):\n - ");
+            System.out.print("Enter number of starting reserved seats (Integer):\n - ");
             reservedSeats = Integer.parseInt(in.nextLine());
             System.out.print("Enter price per seat (Float):\n - ");
             seatPrice = Float.parseFloat(in.nextLine());

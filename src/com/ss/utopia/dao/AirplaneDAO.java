@@ -39,6 +39,48 @@ public class AirplaneDAO extends BaseDAO<Airplane> {
         return out.get(0);
     }
 
+    public void addAirplaneWithType(Integer capacity) throws SQLException {
+        Integer save = saveWithPK("INSERT INTO airplane_type (max_capacity) VALUES (?)",
+            new Object[] { capacity });
+        save("INSERT INTO airplane (type_id) VALUES (?)",
+            new Object[] { save });
+    }
+
+
+    public Integer addType(Integer capacity) throws SQLException {
+        return saveWithPK("INSERT INTO airplane_type (max_capacity) VALUES (?)",
+            new Object[] { capacity });
+    }
+
+
+    public void addAirplane(Integer type) throws SQLException {
+        save("INSERT INTO airplane (type_id) VALUES (?)",
+            new Object[] { type });
+    }
+
+
+    public void removeAirplane(Integer id) throws SQLException {
+        save("DELETE FROM airplane WHERE id = ?",
+            new Object[] { id });
+    }
+
+    public void updateAirplane(Integer type, Integer id) throws SQLException {
+        save("UPDATE airplane SET type_id = ? WHERE id = ?",
+            new Object[] { type, id });
+    }
+
+
+    /**
+     * get a plane by its capacity
+     */
+    public Integer getIdByCapacity(Integer capacity) throws SQLException, ClassNotFoundException {
+        List<Airplane> out = read("SELECT airplane.id, type_id, max_capacity FROM airplane INNER JOIN airplane_type " +
+            "ON airplane_type.id = airplane.type_id WHERE airplane_type.max_capacity = ?",
+            new Object[] { capacity });
+        if (out.size() == 0) return null;
+        return out.get(0).getType();
+    }
+
 
     /**
      * Read a result set and construct an Airplane object

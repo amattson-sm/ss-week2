@@ -18,7 +18,7 @@ public class AdminService extends BaseService{
     protected void printOptions() {
         System.out.println("Admin options:\n" +
             " - 1) Manage Flights\n" +
-            " - 2) Manage Seats\n" +
+            " - 2) Manage Airplane Seats\n" +
             " - 3) Manage Tickets/Passengers\n" +
             " - 4) Manage Airports\n" +
             " - 5) Manage Travellers\n" +
@@ -75,7 +75,9 @@ public class AdminService extends BaseService{
                     break;
                 case 2:
                     // manage seats
-
+                    manager = new AirplaneManager(conn);
+                    save = manager.execute();
+                    System.out.println("Saving Airplane Seat modifications...");
                     break;
                 case 3:
                     // manage tickets/passengers

@@ -21,7 +21,7 @@ public interface Tools {
             try {
                 option = Integer.valueOf(selection);
                 if (option < min || option > max) {
-                    System.out.println("Input must be between "+min+" and "+max+". Try again: \n - ");
+                    System.out.print("Input must be between "+min+" and "+max+". Try again: \n - ");
                     option = null;
                 }
             } catch (Exception e) {

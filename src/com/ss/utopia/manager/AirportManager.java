@@ -146,7 +146,7 @@ public class AirportManager extends BaseManager {
         System.out.print("Enter an airport id (3 characters):\n - ");
         id = in.nextLine().toUpperCase();
         System.out.print("Enter a city name (String):\n - ");
-        city = in.nextLine().toUpperCase();
+        city = in.nextLine();
         if (id.length() != 3) {
             System.out.println("Airport ID is not valid. Exiting...");
             return Boolean.TRUE;

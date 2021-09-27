@@ -1,9 +1,7 @@
 package com.ss.utopia.manager;
 
 import com.ss.utopia.Tools;
-import com.ss.utopia.dao.BookingDAO;
-import com.ss.utopia.dao.FlightDAO;
-import com.ss.utopia.dao.PassengerDAO;
+import com.ss.utopia.dao.*;
 import com.ss.utopia.entity.Booking;
 import com.ss.utopia.entity.Flight;
 import com.ss.utopia.entity.Passenger;
@@ -126,11 +124,17 @@ public class BookingManager extends BaseManager {
         Scanner in = new Scanner(System.in);
         int flightId, userId, active;
         String stripe;
+        FlightDAO fdao = new FlightDAO(conn);
+        UserDAO udao = new UserDAO(conn);
+        FlightManager fman = new FlightManager(conn);
+        UserManager uman = new UserManager(conn, UserRoleDAO.TRAVELLER);
 
         // get user input
         try {
+            fman.printFlights(fdao.readFlights());
             System.out.print("Enter a Flight ID for the Booking (Integer):\n - ");
             flightId = Integer.parseInt(in.nextLine());
+            uman.printUsers(udao.readUserByRole(UserRoleDAO.TRAVELLER));
             System.out.print("Enter a User ID for the Booking (Integer):\n - ");
             userId = Integer.parseInt(in.nextLine());
             System.out.print("Enter a Card Stripe for the Booking Payment (String):\n - ");
@@ -147,7 +151,6 @@ public class BookingManager extends BaseManager {
         }
 
         // check flight info
-        FlightDAO fdao = new FlightDAO(conn);
         List<Flight> flights;
         Flight flight;
         try {
@@ -260,8 +263,17 @@ public class BookingManager extends BaseManager {
      */
     @Override
     protected Boolean updateObject() {
-        // get edit target
         Scanner in = new Scanner(System.in);
+
+        // print options
+        try {
+            printBookings(dao.readBookings());
+        } catch (Exception e) {
+            System.out.println("Unable to read from database.");
+            return Boolean.TRUE;
+        }
+
+        // get edit target
         System.out.print("Enter a booking ID to update:\n - ");
         int target;
         try {
